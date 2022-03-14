@@ -1,0 +1,157 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'assets/css/User_page_css.css' %}">
+
+    <title>Saba</title>
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/">Saba appointer</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="{%  url 'Userhome' %}">Home</a>
+                        <a class="nav-item nav-link" href="/#about">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-item nav-link" href="{% url 'UserPage' %}">Profile</a>
+
+                        {% if user.userpage.status == 'HOST' %}
+                        <a class="nav-item nav-link" href="yoursalon">Your salon</a>
+                        {% endif %}
+                        {% else %}
+                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-item nav-link" href="{% url 'signup' %}">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- main section -->
+
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">{{message}}</div>
+                {% endfor %}
+                {% endif %}
+                {% if user.is_authenticated and user.userpage.status == 'CUSTOMER' %}
+                <article class="media content-section">
+                    <h2 class="article-title">Available Salons  </h2>
+                </article>
+                {% for shop in salons %}
+                {% if shop.iligiblity %}
+                <article class="media content-section">
+                    <img class="rounded-circle article-img" src="{{shop.salon_image.url}}">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                        <h6 class="mr-2">Owner: {{ shop.salon.username }}</h6>
+                        </div>
+                        <h2><a class="article-title" href="{% url 'salon-detail' shop.id %}">{{ shop.salon.userpage.hairsalon }}</a></h2>
+                        <p class="article-content">
+                            Rating: {{ shop.rating }}
+                            Customers in line: {{ shop.customer_queue }}
+                            Location: {{ shop.location }}
+                        </p>
+                    </div>
+                </article>
+                {% endif %}
+                {% endfor %}
+                {% if is_paginated %}
+
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4"href="?page=1">First</a>
+                    <a class="btn btn-outline-info mb-4"href="?page={{page_obj.previous_page_number}}">Previous</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4"href="?page={{num}}">{{num}}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4"href="?page={{num}}">{{num}}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4"href="?page={{page_obj.next_page_number}}">Next</a>
+                <a class="btn btn-outline-info mb-4"href="?page={{page_obj.paginator.num_pages}}">Last</a>
+                {% endif %}
+
+            {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                    <img class="rounded-circle article-img" src="{{ user.userpage.image.url }}">
+                    <a href="/Userpage" class="article-content">{{user.username}}'s </a>profile
+                    <hr>
+                    <p class="article">Your information
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">Crediblity: {{user.userpage.crediblity}}</li>
+                        <li class="list-group-item list-group-item-light">Phone number: {{user.userpage.phone_number}}
+                        </li>
+                        <li class="list-group-item list-group-item-light">Status: {{user.userpage.status}}</li>
+                        {% if user.userpage.status == 'HOST' %}
+                        <li class="list-group-item list-group-item-light">HairSalon: {{user.userpage.hairsalon}}</li>
+                        {% endif %}
+                    </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- end of main section -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'assets/vendor/purecounter/purecounter.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>

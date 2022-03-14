@@ -1,0 +1,3 @@
+Django v 4.0
+Pillow
+crispy_forms
