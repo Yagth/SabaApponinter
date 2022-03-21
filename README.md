@@ -1,1 +1,2 @@
-A website that makes reservations to many salons that are registed to it. It is a brigde between the customer and the host.
+Saba appointer is a website that is under development that has the goal of minimizing time spent while waiting on queue in different hair salons in Ethiopia. Its scope currently is in Addis Ababa, however, it has the intention of widening it to the whole country. 
+It creates a connection between different hair salons and clients. It enables the clients to choose from a wide variety of service providers acording to their location, service quality and their respective choice, while the salon owner can also benefit from the clients by making their services more available to their clients.
