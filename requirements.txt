@@ -117,6 +117,7 @@ requests-toolbelt==0.9.1
 Routes==2.5.1
 scipy==1.8.0
 SecretStorage==3.3.1
+setuptools==1.0
 sgmllib3k==1.0.0
 six==1.16.0
 soupsieve==2.3.1
