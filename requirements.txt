@@ -24,7 +24,7 @@ defer==1.0.4
 distro==1.7.0
 distro-info===1.0
 dnspython==2.1.0
-duplicity==0.8.21.dev6
+duplicity==0.8.23
 ewmh==0.1.6
 fasteners==0.14.1
 feedparser==6.0.8
