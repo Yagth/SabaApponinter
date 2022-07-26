@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,23 +78,23 @@ WSGI_APPLICATION = 'Hair_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg',
-        'NAME': 'd7caa3dnqphoqk',
-        'USER': 'sqpomyapxyujss',
-        'PASSWORD':'6b382443729565445ce19e458b0a2e2077c3e199378d72f956145ef39a2d0129',
-        'HOST':'ec2-52-73-184-24.compute-1.amazonaws.com',
-        'PORT':'5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg',
+#         'NAME': 'd7caa3dnqphoqk',
+#         'USER': 'sqpomyapxyujss',
+#         'PASSWORD':'6b382443729565445ce19e458b0a2e2077c3e199378d72f956145ef39a2d0129',
+#         'HOST':'ec2-52-73-184-24.compute-1.amazonaws.com',
+#         'PORT':'5432'
+#     }
+# }
 
 
 # Password validation
