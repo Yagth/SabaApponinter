@@ -29,7 +29,7 @@ def User_home(request):
 
 class SalonList(LoginRequiredMixin, ListView):
     model = HairSalon
-    template_name = 'User_home.html'
+    template_name = 'user_home.html'
     context_object_name = 'salons'
     ordering = ['-rating']
     paginate_by = 2
